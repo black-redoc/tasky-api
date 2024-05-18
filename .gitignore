@@ -1,0 +1,87 @@
+### backend stuff ###
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyz
+*.pywz
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+
+# Dependency directories
+lib/
+lib64/
+include/
+bin/
+
+# Compiled Python files
+*.so
+*.dylib
+
+# Coverage reports
+htmlcov/
+.coverage
+
+# SQLAlchemy migrations
+alembic/versions/
+
+# SQLite database file
+*.db
+
+# FastAPI generated files
+__pycache__/
+app/__pycache__/
+app/.mypy_cache/
+
+# pytest cache and temporary files
+.pytest_cache/
+pytestdebug.log
+
+# Ignore any local configuration files that may be created during development
+local_settings.py
+
+# Ignore any logs or temporary files
+logs/
+temp/
+
+# Ignore any environment-specific configuration files or secrets
+.env
+
+# Ignore any generated documentation or build directories
+docs/_build/
+
+# Ignore any user-specific configuration files or settings
+*.ini
+
+# Ignore any package-lock.json or Pipfile.lock files for dependency management tools like pipenv or npm/yarn
+package-lock.json
+Pipfile.lock
+
+### frontend stuff ###
+# build output
+dist/
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+
+# environment variables
+.env
+.env.production
+
+
+# localdb
+*.db
