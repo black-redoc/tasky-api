@@ -42,5 +42,4 @@ jobs:
       - name: Test with tox
         run: |
           export ENVIRONMENT=test
-          cd backend
           tox
