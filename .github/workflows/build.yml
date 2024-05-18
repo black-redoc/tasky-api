@@ -38,7 +38,7 @@ jobs:
           python-version: "3.11"
       - name: Install requirements
         run: |
-          pip install -r backend/requirements.txt
+          pip install -r requirements.txt
       - name: Test with tox
         run: |
           export ENVIRONMENT=test
