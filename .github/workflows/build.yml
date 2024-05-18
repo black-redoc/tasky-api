@@ -18,7 +18,6 @@ jobs:
           python-version: "3.11"
       - name: Install requirements
         run: |
-          cd backend
           pip install -r requirements.txt
       - name: Linter
         run: |
