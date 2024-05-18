@@ -31,6 +31,16 @@ models.Base.metadata.create_all(bind=engine)
 models.Base.metadata.create_all(bind=engine)
 
 
+@app.get("/healthcheck")
+def health():
+    return "OK"
+
+
+@app.get("/", status_code=200)
+def health():
+    return None
+
+
 @app.middleware("http")
 async def db_session_middleware(request: Request, call_next):
     response = Response("Internal server error", status_code=500)
