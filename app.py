@@ -10,9 +10,11 @@ from fastapi import FastAPI, Response, Request
 from contextlib import asynccontextmanager
 
 from src.tasks.router import router as task_router
-from src.tasks import models
+from src.tasks import models as tasks_model
 from src.projects.router import router as project_router
-from src.projects import models
+from src.projects import models as projects_model
+from src.users.router import router as users_router
+from src.users import models as users_model
 from src.settings.database import create_database
 
 
@@ -27,8 +29,9 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
-models.Base.metadata.create_all(bind=engine)
-models.Base.metadata.create_all(bind=engine)
+tasks_model.Base.metadata.create_all(bind=engine)
+projects_model.Base.metadata.create_all(bind=engine)
+users_model.Base.metadata.create_all(bind=engine)
 
 
 @app.get("/healthcheck")
@@ -62,3 +65,4 @@ app.add_middleware(
 )
 app.include_router(task_router)
 app.include_router(project_router)
+app.include_router(users_router)
