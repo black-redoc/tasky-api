@@ -18,7 +18,7 @@ router = APIRouter()
 
 @router.post("/users/")
 async def valid_user(user: schemas.UserSchema, db: Session = Depends(get_db)):
-    return service.validate_user(db, user.username)
+    return service.validate_user(db, user)
 
 
 @router.post(
