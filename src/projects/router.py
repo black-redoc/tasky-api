@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends, status
+from typing import Annotated
+from fastapi import APIRouter, Depends, status, Cookie
 from sqlalchemy.orm import Session
 
 from src.settings.database import SessionLocal
@@ -16,16 +17,12 @@ def get_db():
 router = APIRouter()
 
 
-@router.get("/projects/{title}", response_model=schemas.ProjectSchema)
-async def get_project_by_title(title, db: Session = Depends(get_db)):
-    return service.get_project_by_title(db, title)
-
-
 @router.get("/projects/", response_model=list[schemas.ProjectSchema])
 async def read_projects(
     skip: int = 0,
     limit: int = 100,
     db: Session = Depends(get_db),
+    session: Annotated[str | None, Cookie()] = None,
 ):
     projects = service.get_projects(db, skip=skip, limit=limit)
     return projects
