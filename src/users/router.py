@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, Request, Response
 from sqlalchemy.orm import Session
 
 from src.settings.database import SessionLocal
@@ -28,4 +28,14 @@ async def login(
     user: schemas.UserSchema,
     db: Session = Depends(get_db),
 ):
-    return service.login(db, user)
+    import json
+
+    response = service.login(db, user)
+    response.set_cookie(
+        key="session",
+        value=json.dumps({"email": user.email}),
+        httponly=True,
+        samesite="None",
+        secure=True,
+    )
+    return response
