@@ -74,7 +74,6 @@ def health():
 
 @app.middleware("http")
 async def db_session_middleware(request: Request, call_next):
-    print("db_session_middleware")
     try:
         request.state.db = SessionLocal()
         response = await call_next(request)
@@ -89,7 +88,8 @@ async def db_session_middleware(request: Request, call_next):
 
 @app.middleware("http")
 async def http_session_middleware(request: Request, call_next):
-    print("http_session_middleware")
+    if request.url.path in ["/healthcheck", "/"]:
+        return await call_next(request)
     try:
         origin = request.headers["Origin"]
         if origin not in allow_origins:
