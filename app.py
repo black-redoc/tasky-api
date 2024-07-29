@@ -46,10 +46,6 @@ app.add_middleware(
     expose_headers=("*",),
 )
 
-tasks_model.Base.metadata.create_all(bind=engine)
-projects_model.Base.metadata.create_all(bind=engine)
-users_model.Base.metadata.create_all(bind=engine)
-
 
 @app.get("/healthcheck")
 def health():
