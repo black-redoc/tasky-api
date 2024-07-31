@@ -42,7 +42,7 @@ app.add_middleware(
     allow_origins=allow_origins,
     allow_methods=allow_methods,
     allow_headers=allow_headers,
-    allow_credentials=False,
+    allow_credentials=True,
     expose_headers=("*",),
 )
 
@@ -54,6 +54,7 @@ def health():
 
 @app.get("/protected")
 def protected(session: Annotated[str | None, Cookie()] = None):
+    print("protected route")
     if session is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Unauthorized"
@@ -61,11 +62,6 @@ def protected(session: Annotated[str | None, Cookie()] = None):
     user_data = json.loads(session)
     user_data = dict(email=user_data["email"])
     return JSONResponse(status_code=status.HTTP_200_OK, content=user_data)
-
-
-@app.get("/", status_code=status.HTTP_200_OK)
-def health():
-    return "OK"
 
 
 @app.middleware("http")
@@ -96,9 +92,13 @@ async def http_session_middleware(request: Request, call_next):
         response.headers["Access-Control-Allow-Credentials"] = "true"
         response.headers["Access-Control-Allow-Origin"] = origin
         response.headers["Vary"] = "Origin"
-    except Exception:
+    except HTTPException as e:
+        response = JSONResponse(
+            {"detail": e.detail}, status_code=e.status_code
+        )
+    except Exception as e:
         response = Response(
-            "Internal server error", status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+            f"Internal server error: {str(e)}", status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
     return response
 
