@@ -80,7 +80,7 @@ async def db_session_middleware(request: Request, call_next):
 
 @app.middleware("http")
 async def http_session_middleware(request: Request, call_next):
-    if request.url.path in ["/healthcheck", "/"]:
+    if request.url.path in ["/healthcheck",]:
         return await call_next(request)
     try:
         origin = request.headers["Origin"]
